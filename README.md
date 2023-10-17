@@ -13,7 +13,7 @@ Installation method used: [![Ivanti Forum](https://forums.ivanti.com/s/article/H
 
 ## Setup
 Just clone the repository and run ivanti-install.sh
-# prerequisites:
+### prerequisites:
  - root access
  - Identify Core Certificate (See Ivanti Forum link above)
 ```
