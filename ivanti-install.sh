@@ -99,13 +99,13 @@ antwoord() {
 get_IdentityCoreCertificate() {
     echo -n "Enter your Identity Core Certificate: "
     read -p "${1}" certificate
-    echo -n "${certificate}"
+    echo "${certificate}"
 }
 
 get_IvantiServer() {
     echo -n "Enter your Ivanti Coreserver FQDN: "
     read -p "${1}" coreserver
-    echo -n "${coreserver}"
+    echo "${coreserver}"
 }
 
 firewalld_querry() {
@@ -132,9 +132,9 @@ sudoers_querry() {
 sudoers_add() {
     echo -n -e "Adding landesk user to sudoers\r"
     if [[ "${sudoers}" = "yes" ]]; then
-        echo -n "## Allowing landesk user to run all commands" >> /etc/sudoers
-        echo -n "landesk ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-        echo -n "Defaults:landesk !requiretty" >> /etc/sudoers
+        echo "## Allowing landesk user to run all commands" >> /etc/sudoers
+        echo "landesk ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+        echo "Defaults:landesk !requiretty" >> /etc/sudoers
         echo_Done
     else
         echo_Skipped
@@ -144,7 +144,7 @@ sudoers_add() {
 nixconfig_download() {
     echo -n -e "Downloading nixconfig.sh\r"
     mkdir -p /tmp/ems
-    wget -P /tmp/ems http://yourcorename.domain.com/ldlogon/unix/nixconfig.sh
+    wget -P /tmp/ems http://${coreserver}/ldlogon/unix/nixconfig.sh
     echo_Done
 }
 
