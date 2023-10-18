@@ -9,7 +9,7 @@
 
 # +----- Variables ---------------------------------------------------------+
 datetime="$(date "+%Y-%m-%d-%H-%M-%S")"
-logfile="/tmp/prepare_RHEL_${datetime}.log"
+logfile="/tmp/ivanti_install_${datetime}.log"
 width=80
 
 RED=$(tput setaf 1)
@@ -50,21 +50,9 @@ echo_Right() {
     echo "${text}"
 }
 
-echo_OK() {
-    tput setaf 2
-    echo_Right "[ OK ]"
-    tput sgr0
-}
-
 echo_Done() {
     tput setaf 2
     echo_Right "[ Done ]"
-    tput sgr0
-}
-
-echo_NotNeeded() {
-    tput setaf 3
-    echo_Right "[ Not Needed ]"
     tput sgr0
 }
 
@@ -78,6 +66,15 @@ echo_Failed() {
     tput setaf 1
     echo_Right "[ Failed ]"
     tput sgr0
+}
+
+echo_Result() {
+    retVal=$?
+    if [[ "${retVal}" -ne 0 ]]; then
+        echo_Failed
+    else
+        echo_Done
+    fi
 }
 
 get_User() {
@@ -118,7 +115,7 @@ firewalld_ports() {
         firewalld-cmd --permanent --add-port=9595/tcp
         firewalld-cmd --permanent --add-port=9595/udp
         firewalld-cmd --reload
-        echo_Done
+        echo_Result
     else
         echo_Skipped
     fi
@@ -133,7 +130,7 @@ sudoers_add() {
         echo "## Allowing landesk user to run all commands" >> /etc/sudoers
         echo "landesk ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         echo "Defaults:landesk !requiretty" >> /etc/sudoers
-        echo_Done
+        echo_Result
     else
         echo_Skipped
     fi
@@ -143,14 +140,14 @@ nixconfig_download() {
     echo -n -e "Downloading nixconfig.sh\r"
     mkdir -p /tmp/ems
     wget -P /tmp/ems http://${coreserver}/ldlogon/unix/nixconfig.sh >> ${logfile} 2>&1
-    echo_Done
+    echo_Result
 }
 
 agent_install() {
     echo -n -e "Installing Ivanti Agent\r"
     chmod +x /tmp/ems/nixconfig.sh
     /tmp/ems/nixconfig.sh -p -a ${coreserver} -i all -k ${certificate}.0 >> ${logfile} 2>&1
-    echo_Done
+    echo_Result
 }
 
 # +----- Main --------------------------------------------------------------+
