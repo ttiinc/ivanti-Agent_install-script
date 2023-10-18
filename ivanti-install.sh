@@ -99,13 +99,11 @@ antwoord() {
 get_IdentityCoreCertificate() {
     echo -n "Enter your Identity Core Certificate: "
     read -p "${1}" certificate
-    echo "${certificate}"
 }
 
 get_IvantiServer() {
     echo -n "Enter your Ivanti Coreserver FQDN: "
     read -p "${1}" coreserver
-    echo "${coreserver}"
 }
 
 firewalld_querry() {
@@ -144,14 +142,14 @@ sudoers_add() {
 nixconfig_download() {
     echo -n -e "Downloading nixconfig.sh\r"
     mkdir -p /tmp/ems
-    wget -P /tmp/ems http://${coreserver}/ldlogon/unix/nixconfig.sh
+    wget -P /tmp/ems http://${coreserver}/ldlogon/unix/nixconfig.sh >> ${logfile} 2>&1
     echo_Done
 }
 
 agent_install() {
     echo -n -e "Installing Ivanti Agent\r"
     chmod +x /tmp/ems/nixconfig.sh
-    /tmp/ems/nixconfig.sh -p -a ${coreserver} -i all -k ${certificate}.0
+    /tmp/ems/nixconfig.sh -p -a ${coreserver} -i all -k ${certificate}.0 >> ${logfile} 2>&1
     echo_Done
 }
 
