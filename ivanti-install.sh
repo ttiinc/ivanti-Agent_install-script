@@ -97,13 +97,15 @@ antwoord() {
 }
 
 get_IdentityCoreCertificate() {
+    echo -n "Enter your Identity Core Certificate: "
     read -p "${1}" certificate
-    printf "${certificate}"
+    echo -n "${certificate}"
 }
 
 get_IvantiServer() {
+    echo -n "Enter your Ivanti Coreserver FQDN: "
     read -p "${1}" coreserver
-    printf "${coreserver}"
+    echo -n "${coreserver}"
 }
 
 firewalld_querry() {
@@ -149,7 +151,7 @@ nixconfig_download() {
 agent_install() {
     echo -n -e "Installing Ivanti Agent\r"
     chmod +x /tmp/ems/nixconfig.sh
-    /tmp/ems/nixconfig.sh -p -a ${coreserver} -i all -k ${certificate}\.0
+    /tmp/ems/nixconfig.sh -p -a ${coreserver} -i all -k ${certificate}.0
     echo_Done
 }
 
