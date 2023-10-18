@@ -9,7 +9,7 @@
 
 ## Motivation
 To have a script that uses the manual install method of the ivanti-Agent.
-Installation method used: [![Ivanti Forum](https://forums.ivanti.com/s/article/How-To-Manually-Install-2017-3-Linux-Agent?language=en_US)
+Installation method used: [Ivanti Forum](https://forums.ivanti.com/s/article/How-To-Manually-Install-2017-3-Linux-Agent?language=en_US)
 
 ## Setup
 Just clone the repository and run ivanti-install.sh
